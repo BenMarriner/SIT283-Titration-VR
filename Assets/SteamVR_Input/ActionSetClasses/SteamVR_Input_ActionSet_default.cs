@@ -32,5 +32,37 @@ namespace Valve.VR
                 return SteamVR_Actions.default_pose;
             }
         }
+        
+        public virtual SteamVR_Action_Skeleton skeletonLeftHand
+        {
+            get
+            {
+                return SteamVR_Actions.default_skeletonLeftHand;
+            }
+        }
+        
+        public virtual SteamVR_Action_Skeleton skeletonRightHand
+        {
+            get
+            {
+                return SteamVR_Actions.default_skeletonRightHand;
+            }
+        }
+        
+        public virtual SteamVR_Action_Pose squeezeLeftHand
+        {
+            get
+            {
+                return SteamVR_Actions.default_squeezeLeftHand;
+            }
+        }
+        
+        public virtual SteamVR_Action_Pose squeezeRightHand
+        {
+            get
+            {
+                return SteamVR_Actions.default_squeezeRightHand;
+            }
+        }
     }
 }

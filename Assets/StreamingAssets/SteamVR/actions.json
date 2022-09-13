@@ -6,6 +6,26 @@
     },
     {
       "name": "/actions/default/in/pose",
+      "type": "pose",
+      "requirement": "optional"
+    },
+    {
+      "name": "/actions/default/in/skeletonLeftHand",
+      "type": "skeleton",
+      "skeleton": "/skeleton/hand/left"
+    },
+    {
+      "name": "/actions/default/in/skeletonRightHand",
+      "type": "skeleton",
+      "skeleton": "/skeleton/hand/right"
+    },
+    {
+      "name": "/actions/default/in/squeezeLeftHand",
+      "type": "pose",
+      "requirement": "suggested"
+    },
+    {
+      "name": "/actions/default/in/squeezeRightHand",
       "type": "pose"
     }
   ],
