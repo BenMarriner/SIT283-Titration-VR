@@ -1,0 +1,25 @@
+{
+  "actions": [
+    {
+      "name": "/actions/default/in/teleport",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/pose",
+      "type": "pose"
+    }
+  ],
+  "action_sets": [
+    {
+      "name": "/actions/default",
+      "usage": "single"
+    }
+  ],
+  "default_bindings": [
+    {
+      "controller_type": "vive_controller",
+      "binding_url": "application_generated_unity_titrationvr_exe_binding_vive_controller.json"
+    }
+  ],
+  "localization": []
+}
