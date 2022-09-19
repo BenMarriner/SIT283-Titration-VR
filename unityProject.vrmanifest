@@ -2,13 +2,13 @@
   "source": "Unity",
   "applications": [
     {
-      "app_key": "application.generated.unity.titrationvr.exe",
+      "app_key": "application.generated.unity.urp.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "D:\\Game Engines\\Unity Projects\\SIT283-Titration-VR\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "action_manifest_path": "D:\\Game Engines\\Unity Projects\\URP\\Assets\\StreamingAssets\\SteamVR\\actions.json",
       "strings": {
         "en_us": {
-          "name": "Titration VR [Testing]"
+          "name": "URP [Testing]"
         }
       }
     }

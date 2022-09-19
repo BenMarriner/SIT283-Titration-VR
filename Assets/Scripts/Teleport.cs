@@ -21,7 +21,11 @@ public class Teleport : MovementBehaviour
     {
         if (movementTypeEnabled)
         {
-            if (moveAction.GetState(handType)) pointer.laserEnabled = true;
+            if (moveAction.GetState(handType))
+            {
+                pointer.laserEnabled = true;
+            }
+            
             if (moveAction.GetStateUp(handType))
             {
                 pointer.laserEnabled = false;
