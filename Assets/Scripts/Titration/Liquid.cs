@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections.LowLevel.Unsafe;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.Android;
 
-public abstract class Liquid : MonoBehaviour
+public class Liquid : MonoBehaviour
 {
     public static readonly float pHScaleMin = 0.0f, pHScaleMax = 14.0f;
     public static readonly Color pureWater = new Color(0.15f, 0.15f, 0.15f);
@@ -15,7 +16,7 @@ public abstract class Liquid : MonoBehaviour
     public float maxVolume;
 
     public Material material;
-    public Color liquidColour;
+    public Color liquidColour = pureWater;
     public readonly float liquidTransparency = 0.5f;
 
     // pH level for water in its purest form 
@@ -45,16 +46,44 @@ public abstract class Liquid : MonoBehaviour
     }
 
     // When this liquid merges with another liquid
-    protected virtual void OnTriggerEnter(Collider other)
+    protected virtual void OnCollisionEnter(Collision collision)
     {
-        if (other.TryGetComponent<Liquid>(out var otherLiquid))
+        if (collision.transform.TryGetComponent<Liquid>(out var otherLiquid))
         {
             // The smaller liquid merges into the larger liquid
             if (otherLiquid.currentVolume < currentVolume)
             {
-                otherLiquid.currentVolume += currentVolume;
-                Destroy(gameObject);
+                //otherLiquid.currentVolume += currentVolume;
+                otherLiquid.PourLiquid(currentVolume);
+                Destroy(otherLiquid.gameObject);
             }
+            else
+            {
+                Physics.IgnoreCollision(otherLiquid.GetComponent<Collider>(), GetComponent<Collider>());
+            }
+
         }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    /// <summary>
+    /// Reduce liquid volume by x amount
+    /// </summary>
+    /// <param name="volume"></param>
+    public void PourLiquid(float volume)
+    {
+        currentVolume -= volume;
+    }
+
+    /// <summary>
+    /// Increase liquid volume by x amount
+    /// </summary>
+    /// <param name="volume"></param>
+    public void FillLiquid(float volume)
+    {
+        currentVolume += volume;
     }
 }

@@ -51,17 +51,17 @@ public abstract class Indicator : Liquid
 {
     public IndicatorInfo info;
 
-    protected override void OnTriggerEnter(Collider other)
+    protected override void OnCollisionEnter(Collision collision)
     {
-        if (other.TryGetComponent<Liquid>(out var otherLiquid))
+        if (collision.transform.TryGetComponent<Liquid>(out var otherLiquid))
         {
-            // The smaller liquid merges into the larger liquid
+            // Apply pH
             if (otherLiquid.currentVolume > currentVolume)
             {
                 otherLiquid.liquidColour = info.GetPHColor(otherLiquid.pH);
             }
 
-            base.OnTriggerEnter(other);
+            base.OnCollisionEnter(collision);
         }
     }
 }

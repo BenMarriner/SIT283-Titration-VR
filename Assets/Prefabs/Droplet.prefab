@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4846879815235462907}
   - component: {fileID: 229635791171187525}
   - component: {fileID: 8781879069108691104}
+  - component: {fileID: 5403805081864824268}
   m_Layer: 0
   m_Name: Droplet
   m_TagString: Untagged
@@ -91,7 +92,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3622525536969112177}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -112,3 +113,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5403805081864824268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3622525536969112177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1300beb95aa3746acd2b931ee738db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentVolume: 0.05
+  maxVolume: 0.05
+  material: {fileID: 2100000, guid: eb108b5c5b128bb408a0a16b85ed0567, type: 2}
+  liquidColour: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 0}
+  pH: 7
