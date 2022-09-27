@@ -8,17 +8,17 @@ public struct IndicatorInfo
     private ColourCurve _indicatorColours;
     
     public readonly float[] minPHRanges, maxPHRanges;
-    public readonly Color minPHColour, maxPHColour;
+    public readonly Color[] minPHColours, maxPHColours;
 
-    public IndicatorInfo(float[] minPHs, float[] maxPHs, Color minPHColour, Color maxPHColour)
+    public IndicatorInfo(float[] minPHs, float[] maxPHs, Color[] minPHColours, Color[] maxPHColours)
     {
         minPHRanges = minPHs;
         maxPHRanges = maxPHs;
-        this.minPHColour = minPHColour;
-        this.maxPHColour = maxPHColour;
+        this.minPHColours = minPHColours;
+        this.maxPHColours = maxPHColours;
 
         // Defines a new colour curve with the pH scale as the range
-        _indicatorColours = new ColourCurve(Liquid.pHScaleMin, Liquid.pHScaleMax, minPHColour, maxPHColour);
+        _indicatorColours = new ColourCurve(Liquid.pHScaleMin, Liquid.pHScaleMax, minPHColours[0], maxPHColours[maxPHRanges.Length - 1]);
 
         if (minPHRanges.Length != maxPHRanges.Length)
         {
@@ -26,10 +26,22 @@ public struct IndicatorInfo
             return;
         }
 
+        if (maxPHColours.Length != minPHColours.Length)
+        {
+            Debug.LogError("Min and max pH colour range arrays are not equal in length. Please fix");
+            return;
+        }
+
+        if (minPHColours.Length != minPHRanges.Length)
+        {
+            Debug.LogError("Min and max pH colour range array length does not match the length of the pH range array. Please fix");
+            return;
+        }
+
         for (int i = 0; i < minPHRanges.Length; i++)
         {
-            _indicatorColours.SetValueAtTime(minPHRanges[i], minPHColour, ColourCurve.FalloffType.Linear);
-            _indicatorColours.SetValueAtTime(maxPHRanges[i], maxPHColour, ColourCurve.FalloffType.Constant);
+            _indicatorColours.SetValueAtTime(minPHRanges[i], minPHColours[i], ColourCurve.FalloffType.Linear);
+            _indicatorColours.SetValueAtTime(maxPHRanges[i], maxPHColours[i], ColourCurve.FalloffType.Linear);
         }
     }
 
@@ -56,7 +68,7 @@ public abstract class Indicator : Liquid
         if (collision.transform.TryGetComponent<Liquid>(out var otherLiquid))
         {
             // Apply pH
-            if (otherLiquid.currentVolume > currentVolume)
+            if (currentVolume < otherLiquid.currentVolume)
             {
                 otherLiquid.liquidColour = info.GetPHColor(otherLiquid.pH);
             }

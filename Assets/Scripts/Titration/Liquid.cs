@@ -7,8 +7,11 @@ using UnityEngine.Android;
 
 public class Liquid : MonoBehaviour
 {
+    private Material liquidMaterial;
+
     public static readonly float pHScaleMin = 0.0f, pHScaleMax = 14.0f;
-    public static readonly Color pureWater = new Color(0.15f, 0.15f, 0.15f);
+    public static readonly Color pureWater = new Color(0.4f, 0.4f, 0.4f);
+    public static readonly float pureWaterPH = 7.0f;
     
     [Min(0.0f)]
     public float currentVolume;
@@ -22,16 +25,22 @@ public class Liquid : MonoBehaviour
     // pH level for water in its purest form 
     public float pH = 7.0f;
     public float pHNormalised { get { return pH / pHScaleMax; } }
+    public bool isContained = false;
 
     protected virtual void Start()
     {
         liquidColour.a = liquidTransparency;
         GetComponent<MeshRenderer>().material = material;
+        liquidMaterial = GetComponent<MeshRenderer>().material;
     }
 
     protected virtual void Update()
     {
         GetComponent<MeshRenderer>().material.color = liquidColour;
+        //liquidMaterial.SetColor("Colour", liquidColour);
+        //liquidMaterial.SetFloat("MaxLevel", maxVolume);
+        //liquidMaterial.SetFloat("Level", currentVolume);
+        
     }
 
     private void OnValidate()
@@ -48,25 +57,20 @@ public class Liquid : MonoBehaviour
     // When this liquid merges with another liquid
     protected virtual void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.TryGetComponent<Liquid>(out var otherLiquid))
+        if (collision.collider.TryGetComponent<Liquid>(out var otherLiquid))
         {
             // The smaller liquid merges into the larger liquid
-            if (otherLiquid.currentVolume < currentVolume)
+            if (currentVolume < otherLiquid.currentVolume)
             {
+                // Transfer contents of one liquid to the other
                 //otherLiquid.currentVolume += currentVolume;
-                otherLiquid.PourLiquid(currentVolume);
-                Destroy(otherLiquid.gameObject);
+                PourLiquid(currentVolume);
+                otherLiquid.FillLiquid(currentVolume);
             }
-            else
-            {
-                Physics.IgnoreCollision(otherLiquid.GetComponent<Collider>(), GetComponent<Collider>());
-            }
+        }
+        
+        if (!isContained) Destroy(gameObject);
 
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
 
     /// <summary>

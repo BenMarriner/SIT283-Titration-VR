@@ -55,6 +55,10 @@
       "requirement": "mandatory"
     },
     {
+      "name": "/actions/default/in/PauseMenu",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     }
